@@ -27,6 +27,7 @@ $file       = null;
 $outputDir  = null;
 $candidates = [
     __DIR__ . '/../..',
+    __DIR__ . '/../../..',
     __DIR__ . '/../vendor',
     __DIR__ . '/vendor'
 ];
