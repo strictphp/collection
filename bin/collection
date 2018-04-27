@@ -1,0 +1,64 @@
+#!/usr/bin/env php
+<?php
+
+function fail(string ...$messages)
+{
+    foreach ($messages as $message) {
+        fprintf(STDERR, $message . PHP_EOL);
+    }
+    die;
+}
+
+// Argument Count
+array_shift($argv);
+if (count($argv) !== 3) fail('Error: Invalid Input', '"$ collection vector $new_vector_namespace $target_class"');
+
+// First Argument
+[$type, $namespace, $target] = $argv;
+if (strtolower($type) !== 'vector') fail('Only "vector" is supported.');
+$namespace       = rtrim($namespace, '\\');
+$targetClassName = $target;
+if (1 === preg_match('@\\\\([a-zA-Z0-9_]+)$@u', $target, $m)) {
+    $targetClassName = $m[1];
+}
+
+// Auto Loader
+$file       = null;
+$outputDir  = null;
+$candidates = [
+    __DIR__ . '/../..',
+    __DIR__ . '/../vendor',
+    __DIR__ . '/vendor'
+];
+foreach ($candidates as $candidate) {
+    if (file_exists($candidate . '/autoload.php')) {
+        $file      = $candidate . '/autoload.php';
+        $outputDir = $candidate . '/..';
+        break;
+    }
+}
+if (is_null($file)) fail('Autoloader not found.' . PHP_EOL);
+assert(!is_null($outputDir));
+require($file);
+
+// Auto Loader is Ready
+$inputDir = \Strict\Collection\Vector\Templates\TemplateDirectoryTeller::getDirectory();
+
+
+$n = [
+    $inputDir . '/BaseVector_stdClass.php'     => $outputDir . '/BaseVector_' . $targetClassName . '.php',
+    $inputDir . '/Vector_stdClass.php'         => $outputDir . '/Vector_' . $targetClassName . '.php',
+    $inputDir . '/VectorIterator_stdClass.php' => $outputDir . '/VectorIterator_' . $targetClassName . '.php',
+];
+
+foreach ($n as $input => $output) {
+    file_put_contents($output, str_replace(
+        ['stdClass', 'namespace Strict\\Collection\\Vector\\Templates;'],
+        [$targetClassName, 'namespace ' . $namespace . ';'],
+        str_replace(
+            'use stdClass;',
+            'use ' . $target . ';',
+            file_get_contents($input)
+        )
+    ));
+}
