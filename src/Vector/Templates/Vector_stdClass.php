@@ -2,8 +2,6 @@
 
 namespace Strict\Collection\Vector\Templates;
 
-use Strict\Collection\Vector\Templates\BaseVector_stdClass;
-
 
 /**
  * [Vector] Vector_stdClass

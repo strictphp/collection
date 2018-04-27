@@ -4,9 +4,7 @@ declare(strict_types=1);
 namespace Strict\Collection\Vector\Templates;
 
 use Strict\Collection\Vector\VectorAbstract;
-
 use stdClass;
-use Strict\Collection\Vector\Templates\VectorIterator_stdClass;
 
 
 abstract class BaseVector_stdClass
