@@ -23,5 +23,6 @@
         "psr-4": {
             "Strict\\Collection\\Tests\\": "tests/"
         }
-    }
+    },
+    "bin": ["bin/collection"]
 }
