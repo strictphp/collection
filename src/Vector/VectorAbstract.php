@@ -9,6 +9,14 @@ use IteratorAggregate;
 use OutOfBoundsException;
 
 
+/**
+ * [Abstract Class] Vector Abstract
+ *
+ * @author Showsay You <akizuki.c10.l65@gmail.com>
+ * @copyright 2018. All Rights Reserved.
+ * @package strictphp/collection
+ * @since v1.0.0
+ */
 abstract class VectorAbstract
     implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -87,6 +95,9 @@ abstract class VectorAbstract
         $this->vector = array_values($this->vector);
     }
 
+    /**
+     * @param int $offset
+     */
     private function existsOrFail(int $offset): void
     {
         if (!isset($this->vector[$offset])) {
