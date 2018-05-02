@@ -64,7 +64,7 @@ abstract class VectorAbstract
      *
      * @internal
      */
-    public function argOffsetSet(?int $offset, $value): void
+    protected function argOffsetSet(?int $offset, $value): void
     {
         if (is_null($offset)) {
             $this->vector[] = $value;
@@ -80,7 +80,7 @@ abstract class VectorAbstract
      *
      * @internal
      */
-    public function argOffsetUnset(int $offset): void
+    protected function argOffsetUnset(int $offset): void
     {
         $this->existsOrFail($offset);
         unset($this->vector[$offset]);
