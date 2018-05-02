@@ -120,4 +120,14 @@ abstract class VectorAbstract
     {
         return empty($this->vector);
     }
+
+    /**
+     * Acquire a copy of vector in array form.
+     *
+     * @return array
+     */
+    public function getArray(): array
+    {
+        return $this->getVector();
+    }
 }
