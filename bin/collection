@@ -11,16 +11,7 @@ function fail(string ...$messages)
 
 // Argument Count
 array_shift($argv);
-if (count($argv) !== 3) fail('Error: Invalid Input', '"$ collection vector $new_vector_namespace $target_class"');
-
-// First Argument
-[$type, $namespace, $target] = $argv;
-if (strtolower($type) !== 'vector') fail('Only "vector" is supported.');
-$namespace       = rtrim($namespace, '\\');
-$targetClassName = $target;
-if (1 === preg_match('@\\\\([a-zA-Z0-9_]+)$@u', $target, $m)) {
-    $targetClassName = $m[1];
-}
+if (count($argv) !== 3) fail('Error: Invalid Input', '"$ collection vector|intmap $new_vector_namespace $target_class"');
 
 // Auto Loader
 $file       = null;
@@ -42,24 +33,68 @@ if (is_null($file)) fail('Autoloader not found.' . PHP_EOL);
 assert(!is_null($outputDir));
 require($file);
 
-// Auto Loader is Ready
-$inputDir = \Strict\Collection\Vector\Templates\TemplateDirectoryTeller::getDirectory();
+// First Argument
+[$type, $namespace, $target] = $argv;
 
 
-$n = [
-    $inputDir . '/BaseVector_stdClass.php'     => $outputDir . '/BaseVector_' . $targetClassName . '.php',
-    $inputDir . '/Vector_stdClass.php'         => $outputDir . '/Vector_' . $targetClassName . '.php',
-    $inputDir . '/VectorIterator_stdClass.php' => $outputDir . '/VectorIterator_' . $targetClassName . '.php',
-];
+if (strtolower($type) === 'vector') {
+    $namespace       = rtrim($namespace, '\\');
+    $targetClassName = $target;
+    if (1 === preg_match('@\\\\([a-zA-Z0-9_]+)$@u', $target, $m)) {
+        $targetClassName = $m[1];
+    }
 
-foreach ($n as $input => $output) {
-    file_put_contents($output, str_replace(
-        ['stdClass', 'namespace Strict\\Collection\\Vector\\Templates;'],
-        [$targetClassName, 'namespace ' . $namespace . ';'],
-        str_replace(
-            'use stdClass;',
-            'use ' . $target . ';',
-            file_get_contents($input)
-        )
-    ));
+
+    // Auto Loader is Ready
+    $inputDir = \Strict\Collection\Vector\Templates\TemplateDirectoryTeller::getDirectory();
+
+
+    $n = [
+        $inputDir . '/BaseVector_stdClass.php'     => $outputDir . '/BaseVector_' . $targetClassName . '.php',
+        $inputDir . '/Vector_stdClass.php'         => $outputDir . '/Vector_' . $targetClassName . '.php',
+        $inputDir . '/VectorIterator_stdClass.php' => $outputDir . '/VectorIterator_' . $targetClassName . '.php',
+    ];
+
+    foreach ($n as $input => $output) {
+        file_put_contents($output, str_replace(
+            ['stdClass', 'namespace Strict\\Collection\\Vector\\Templates;'],
+            [$targetClassName, 'namespace ' . $namespace . ';'],
+            str_replace(
+                'use stdClass;',
+                'use ' . $target . ';',
+                file_get_contents($input)
+            )
+        ));
+    }
+} else if (strtolower($type) === 'intmap') {
+    $namespace       = rtrim($namespace, '\\');
+    $targetClassName = $target;
+    if (1 === preg_match('@\\\\([a-zA-Z0-9_]+)$@u', $target, $m)) {
+        $targetClassName = $m[1];
+    }
+
+
+    // Auto Loader is Ready
+    $inputDir = \Strict\Collection\IntMap\Templates\IntMapTemplateDirectoryTeller::getDirectory();
+
+
+    $n = [
+        $inputDir . '/BaseIntMap_stdClass.php'     => $outputDir . '/BaseIntMap_' . $targetClassName . '.php',
+        $inputDir . '/IntMap_stdClass.php'         => $outputDir . '/IntMap_' . $targetClassName . '.php',
+        $inputDir . '/IntMapIterator_stdClass.php' => $outputDir . '/IntMapIterator_' . $targetClassName . '.php',
+    ];
+
+    foreach ($n as $input => $output) {
+        file_put_contents($output, str_replace(
+            ['stdClass', 'namespace Strict\\Collection\\IntMap\\Templates;'],
+            [$targetClassName, 'namespace ' . $namespace . ';'],
+            str_replace(
+                'use stdClass;',
+                'use ' . $target . ';',
+                file_get_contents($input)
+            )
+        ));
+    }
+} else {
+    fail('Only "vector" and "intmap" are supported.');
 }
