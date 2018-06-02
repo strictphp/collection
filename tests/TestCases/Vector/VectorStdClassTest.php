@@ -125,4 +125,36 @@ class VectorStdClassTest
             $this->assertEquals(++$i, $value->id);
         }
     }
+
+    public function testShift()
+    {
+        $vector = new Vector_stdClass(
+            (object)['id' => 1],
+            (object)['id' => 2],
+            (object)['id' => 3]
+        );
+
+        $this->assertEquals(1, $vector->shift()->id);
+        $this->assertEquals(2, $vector->shift()->id);
+        $this->assertEquals(3, $vector->shift()->id);
+
+        $this->expectException(OutOfBoundsException::class);
+        $vector->shift();
+    }
+
+    public function testPop()
+    {
+        $vector = new Vector_stdClass(
+            (object)['id' => 1],
+            (object)['id' => 2],
+            (object)['id' => 3]
+        );
+
+        $this->assertEquals(3, $vector->pop()->id);
+        $this->assertEquals(2, $vector->pop()->id);
+        $this->assertEquals(1, $vector->pop()->id);
+
+        $this->expectException(OutOfBoundsException::class);
+        $vector->pop();
+    }
 }

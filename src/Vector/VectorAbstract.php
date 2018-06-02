@@ -141,4 +141,30 @@ abstract class VectorAbstract
     {
         return $this->getVector();
     }
+
+    /**
+     * @return mixed
+     *
+     * @internal
+     */
+    protected function rawShift()
+    {
+        if (count($this) === 0) {
+            throw new OutOfBoundsException('Can not shift an empty vector.');
+        }
+        return array_shift($this->vector);
+    }
+
+    /**
+     * @return mixed
+     *
+     * @internal
+     */
+    protected function rawPop()
+    {
+        if (count($this) === 0) {
+            throw new OutOfBoundsException('Can not pop an empty vector.');
+        }
+        return array_pop($this->vector);
+    }
 }

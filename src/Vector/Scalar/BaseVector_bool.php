@@ -21,7 +21,7 @@ abstract class BaseVector_bool
     /**
      * Vector_bool constructor.
      *
-     * @param bool[] ...$initializer
+     * @param bool ...$initializer
      */
     public function __construct(bool ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_bool
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return bool
+     */
+    public function shift(): bool
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return bool
+     */
+    public function pop(): bool
+    {
+        return $this->rawPop();
     }
 }

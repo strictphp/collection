@@ -21,7 +21,7 @@ abstract class BaseVector_callable
     /**
      * Vector_callable constructor.
      *
-     * @param callable[] ...$initializer
+     * @param callable ...$initializer
      */
     public function __construct(callable ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_callable
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return callable
+     */
+    public function shift(): callable
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return callable
+     */
+    public function pop(): callable
+    {
+        return $this->rawPop();
     }
 }

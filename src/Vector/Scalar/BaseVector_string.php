@@ -21,7 +21,7 @@ abstract class BaseVector_string
     /**
      * Vector_string constructor.
      *
-     * @param string[] ...$initializer
+     * @param string ...$initializer
      */
     public function __construct(string ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_string
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return string
+     */
+    public function shift(): string
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return string
+     */
+    public function pop(): string
+    {
+        return $this->rawPop();
     }
 }

@@ -21,7 +21,7 @@ abstract class BaseVector_stdClass
     /**
      * Vector_stdClass constructor.
      *
-     * @param stdClass[] ...$initializer
+     * @param stdClass ...$initializer
      */
     public function __construct(stdClass ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_stdClass
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return stdClass
+     */
+    public function shift(): stdClass
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return stdClass
+     */
+    public function pop(): stdClass
+    {
+        return $this->rawPop();
     }
 }

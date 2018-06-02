@@ -21,7 +21,7 @@ abstract class BaseVector_iterable
     /**
      * Vector_iterable constructor.
      *
-     * @param iterable[] ...$initializer
+     * @param iterable ...$initializer
      */
     public function __construct(iterable ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_iterable
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return iterable
+     */
+    public function shift(): iterable
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return iterable
+     */
+    public function pop(): iterable
+    {
+        return $this->rawPop();
     }
 }

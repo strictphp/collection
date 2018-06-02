@@ -21,7 +21,7 @@ abstract class BaseVector_int
     /**
      * Vector_int constructor.
      *
-     * @param int[] ...$initializer
+     * @param int ...$initializer
      */
     public function __construct(int ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_int
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return int
+     */
+    public function shift(): int
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return int
+     */
+    public function pop(): int
+    {
+        return $this->rawPop();
     }
 }

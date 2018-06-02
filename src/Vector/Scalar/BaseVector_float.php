@@ -21,7 +21,7 @@ abstract class BaseVector_float
     /**
      * Vector_float constructor.
      *
-     * @param float[] ...$initializer
+     * @param float ...$initializer
      */
     public function __construct(float ...$initializer)
     {
@@ -97,5 +97,21 @@ abstract class BaseVector_float
     public function offsetUnset($offset): void
     {
         $this->argOffsetUnset($offset);
+    }
+
+    /**
+     * @return float
+     */
+    public function shift(): float
+    {
+        return $this->rawShift();
+    }
+
+    /**
+     * @return float
+     */
+    public function pop(): float
+    {
+        return $this->rawPop();
     }
 }
